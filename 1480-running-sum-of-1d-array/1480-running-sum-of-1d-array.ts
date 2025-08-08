@@ -1,6 +1,9 @@
 function runningSum(nums: number[]): number[] {
-    for (let i = 1; i < nums.length; i++) {
-        nums[i] += nums[i - 1];
+    let acc = 0;
+    const output = [];
+    for (let i = 0; i < nums.length; i++) {
+        acc += nums[i];
+        output.push(acc);
     }
-    return nums;
+    return output;
 };
