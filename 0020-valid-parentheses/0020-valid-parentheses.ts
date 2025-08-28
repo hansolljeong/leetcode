@@ -13,6 +13,6 @@ function isValid(s: string): boolean {
             stack.push(bracket);
         }
     }
-    
+
     return stack.length === 0;
 };
