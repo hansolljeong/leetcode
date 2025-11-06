@@ -1,9 +1,9 @@
 function getSneakyNumbers(nums: number[]): number[] {
+    const seen = new Set();
     const result = [];
-    let map = new Map()
-    for (let i = 0; i < nums.length; i++) {
-        if (map.get(nums[i]) !== undefined) result.push(nums[i]);
-        else map.set(nums[i], 1);
+    for (const num of nums) {
+        if (seen.has(num)) result.push(num);
+        else seen.add(num);
     }
     return result;
 };
