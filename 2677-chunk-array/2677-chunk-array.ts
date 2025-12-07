@@ -3,7 +3,6 @@ type Obj = Record<string, JSONValue> | Array<JSONValue>;
 
 function chunk(arr: Obj[], size: number): Obj[][] {
     if (arr.length === 0) return [];
-    if (size >= arr.length) return [arr];
     
     let stack = [];
     let result = [];
