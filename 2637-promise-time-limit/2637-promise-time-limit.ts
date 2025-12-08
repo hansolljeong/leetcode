@@ -9,7 +9,7 @@ function timeLimit(fn: Fn, t: number): Fn {
                 reject("Time Limit Exceeded")
             }, t);
         });
-        return await Promise.race([originFn, timer]);
+        return Promise.race([originFn, timer]);
     }
 };
 
