@@ -3,13 +3,12 @@ type Fn = (...params: any[]) => Promise<any>;
 function timeLimit(fn: Fn, t: number): Fn {
     
     return async function(...args) {
-        const originFn = new Promise((resolve) => resolve(fn(...args)));
-        const timer = new Promise((resolve, reject) => {
+        const timeoutPromise = new Promise((_, reject) => {
             setTimeout(() => {
                 reject("Time Limit Exceeded")
             }, t);
         });
-        return Promise.race([originFn, timer]);
+        return Promise.race([fn(...args), timeoutPromise]);
     }
 };
 
