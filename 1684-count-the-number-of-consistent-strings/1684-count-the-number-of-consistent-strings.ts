@@ -1,3 +1,4 @@
 function countConsistentStrings(allowed: string, words: string[]): number {
-    return words.filter((word) => word.split("").every((s) => allowed.includes(s))).length;
+    const allowedSet = new Set(allowed);
+    return words.filter(word => word.split("").every(s => allowedSet.has(s))).length;
 };
