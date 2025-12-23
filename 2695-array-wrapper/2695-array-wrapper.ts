@@ -1,17 +1,17 @@
 class ArrayWrapper {
+    private nums: number[];
     
     constructor(nums: number[]) {
         this.nums = nums;
     }
     
-    nums: number[];
 
     valueOf(): number {
         return this.nums.reduce((acc, cur) => acc + cur, 0);
     }
     
     toString(): string {
-        return '[' + this.nums + ']';
+        return JSON.stringify(this.nums);
     }
 };
 
