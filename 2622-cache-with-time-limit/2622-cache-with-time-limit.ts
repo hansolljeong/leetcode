@@ -1,38 +1,39 @@
 class TimeLimitedCache {
-    private cache: Record<string, number>;
-    private timeoutIdObj;
+    private cache: Map<number, number>;
+    private timeout;
     
     constructor() {
-        this.cache = {};
-        this.timeoutIdObj = {};
+        this.cache = new Map();
+        this.timeout = new Map();
     }
-    
+
     set(key: number, value: number, duration: number): boolean {
-        if (this.cache[key] !== undefined) {
-            clearTimeout(this.timeoutIdObj[key]);
-            this.cache[key] = value;
-            this.timeoutIdObj[key] = setTimeout(() => {
-                delete this.cache[key];
+        if (this.cache.has(key)) {
+            clearTimeout(this.timeout.get(key));
+            this.cache.set(key, value);
+            const timeoutId = setTimeout(() => {
+                this.cache.delete(key);
             }, duration);
+            this.timeout.set(key, timeoutId);
             return true;
         }
 
-        this.cache[key] = value;
-        
-        this.timeoutIdObj[key] = setTimeout(() => {
-            delete this.cache[key];
+        this.cache.set(key, value);
+
+        const timeoutId = setTimeout(() => {
+            this.cache.delete(key);
         }, duration);
-        
+        this.timeout.set(key, timeoutId);
         return false;
     }
     
     get(key: number): number {
-        if (this.cache[key] === undefined) return -1;
-        return this.cache[key];
+        if (!this.cache.has(key)) return -1;
+        return this.cache.get(key);
     }
     
     count(): number {
-        return Object.keys(this.cache).length;
+        return this.cache.size;
     }
 }
 
