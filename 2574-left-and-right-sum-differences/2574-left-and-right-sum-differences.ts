@@ -1,6 +1,12 @@
 function leftRightDifference(nums: number[]): number[] {
-    const leftSum = nums.map((_, i) => nums.slice(0, i).reduce((acc, cur) => acc + cur, 0));
-    const rightSum = nums.map((_, i) => nums.slice(i + 1).reduce((acc, cur) => acc + cur, 0));
-    const answer = leftSum.map((v, i) => Math.abs(v - rightSum[i]));
+    const answer = [];
+    const totalSum = nums.reduce((acc, cur) => acc + cur, 0);
+    let leftSum = 0;
+    let rightSum = 0;
+    for (let i = 0; i < nums.length; i++) {
+        rightSum = totalSum - leftSum - nums[i];
+        answer.push(Math.abs(leftSum - rightSum));
+        leftSum += nums[i];
+    }
     return answer;
 };
